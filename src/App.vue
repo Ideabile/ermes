@@ -61,6 +61,7 @@
                     </pre>
                 </p>
             </div>
+            <FileSearch v-bind:user="user" v-bind:repo="repo" v-bind:path="path" />
             <button v-on:click="fetchSource()">Fetch</button>
         </div>
     </div>
