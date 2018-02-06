@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="edit" v-if="content !== ''">
-            <img alt="Ermes" src="/static/logo.png" class="logo" height="30px"/>
+            <img alt="Ermes" :src="`${baseUrl}static/logo.png`" class="logo" height="30px"/>
             <User class="user" />
             <FileSearch
                 @update:user="val => user = val"
@@ -36,7 +36,7 @@
         </div>
         <div class="file" v-if="!content">
             <div class="logo">
-                <img alt="Ermes" src="/static/logo.png"/>
+                <img alt="Ermes" :src="`${baseUrl}static/logo.png`"/>
             </div>
             <div class="branding">
                 <h1>Ermes</h1>
@@ -51,14 +51,14 @@
                     <br/>
                     <br/>
                     <a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
-                        <img alt="" src="/static/edit.svg"/>
+                        <img alt="" :src="`${baseUrl}static/edit.svg`"/>
                     </a>
                     <h2>Markdown</h2>
-                    <pre><code>[![Build Status](/static/edit.svg)](http://www.ideabile.com/ermes/#/Ideabile/monera/README.md)</code></pre>
+                    <pre><code>[![Edit this page]({{ baseUrl }}static/edit.svg)]({{ baseUrl }}#/Ideabile/ermes/README.md)</code></pre>
                     <br/>
                     <h2>HTML</h2>
-                    <pre><code>&#x3C;a href=&#x22;http://www.ideabile.com/ermes/#/Ideabile/monera/README.md&#x22;&#x3E;
-    &#x3C;img alt=&#x22;&#x22; src=&#x22;/static/edit.svg&#x22;/&#x3E;
+                    <pre><code>&#x3C;a href=&#x22;{{ baseUrl }}#/Ideabile/ermes/README.md&#x22;&#x3E;
+    &#x3C;img alt=&#x22;Edit this page&#x22; src=&#x22;/static/edit.svg&#x22;/&#x3E;
 &#x3C;/a&#x3E;</code></pre>
                 </p>
             </div>
@@ -101,10 +101,11 @@
              content: '',
              path: 'README.md',
              user: 'Ideabile',
-             repo: 'monera',
+             repo: 'ermes',
              mode: 'source',
              localState: 'saved',
-             hasChanged: false
+             hasChanged: false,
+             baseUrl: process.env.URL_BASE
          }
      },
 
