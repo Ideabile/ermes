@@ -32,35 +32,12 @@
 
             <SourceEditor class="editor" v-if="mode === 'source'" :content="content" :lang="language"></SourceEditor>
             <Wysiwyg v-if="mode === 'wysiwyg'" ref="wysiwyg" :content="content" :lang="language"></Wysiwyg>
-
         </div>
         <div class="file" v-if="!content">
             <div class="logo">
                 <img alt="Ermes" :src="`${baseUrl}static/logo.png`"/>
             </div>
-            <div class="branding">
-                <h1>Ermes</h1>
-                <p>
-                    Ermes is an editor <i>Hosted in Github</i> made for <i>Github</i>.
-                </p>
-                <p>
-                    Empowers static-websites by enabling login-free contributions for thoose websites hosted in the popular version control service.
-                </p>
-                <p>
-                    Just link from your website
-                    <br/>
-                    <br/>
-                    <a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
-                        <img alt="" :src="`${baseUrl}static/edit.svg`"/>
-                    </a>
-                    <h2>Markdown</h2>
-                    <pre><code>[![Edit this page]({{ baseUrl }}static/edit.svg)]({{ baseUrl }}#/Ideabile/ermes/README.md)</code></pre>
-                    <br/>
-                    <h2>HTML</h2>
-                    <pre><code>&#x3C;a href=&#x22;{{ baseUrl }}#/Ideabile/ermes/README.md&#x22;&#x3E;
-    &#x3C;img alt=&#x22;Edit this page&#x22; src=&#x22;/static/edit.svg&#x22;/&#x3E;
-&#x3C;/a&#x3E;</code></pre>
-                </p>
+            <div class="branding" v-html="readme">
             </div>
             <FileSearch
                 @update:user="val => user = val"
@@ -105,7 +82,8 @@
              mode: 'source',
              localState: 'saved',
              hasChanged: false,
-             baseUrl: process.env.URL_BASE
+             baseUrl: process.env.URL_BASE,
+             readme: process.env.README.content
          }
      },
 

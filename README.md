@@ -1,6 +1,26 @@
-# Ermes 
+# Ermes
 
-> Bring the bright light trough the dark.
+> Ermes is an editor <i>Hosted in Github</i> made for <i>Github</i>.
+
+Empowers static-websites by enabling login-free contributions for thoose websites hosted in the popular version control service.
+
+Just link from your website with a simple button [![Edit](http://www.ideabile.com/ermes/static/edit.svg)](http://www.ideabile.com/ermes/#!/Ideabile/ermes/README.md)
+
+## How to use it
+You can just include a link in your website and point to the right repository informations.
+
+### Markdown
+``` markdown
+[![Edit this page](http://www.ideabile.com/ermes/static/edit.svg)](http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md)
+```
+
+### Html
+```html
+<a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
+    <img alt="" :src="`${baseUrl}static/edit.svg`"/>
+</a>
+```
+
 
 ## Build Setup
 
@@ -23,5 +43,3 @@ npm run unit
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
