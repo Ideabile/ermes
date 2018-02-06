@@ -3,7 +3,13 @@
         <div class="edit" v-if="content !== ''">
             <img alt="Ermes" src="/static/logo.png" class="logo" height="30px"/>
             <User class="user" />
-            <FileSearch v-bind:user="user" v-bind:repo="repo" v-bind:path="path" />
+            <FileSearch
+                @update:user="val => user = val"
+                :user="user"
+                @update:repo="val => repo = val"
+                :repo="repo"
+                @update:path="val => path = val"
+                :path="path" />
             <ul class="nav">
 
                 <li
@@ -38,31 +44,32 @@
                     Ermes is an editor <i>Hosted in Github</i> made for <i>Github</i>.
                 </p>
                 <p>
-                    The idea is empower static-websites contributions by enabling login-free for thoose websites hosted in the popular version control service.
+                    Empowers static-websites by enabling login-free contributions for thoose websites hosted in the popular version control service.
                 </p>
                 <p>
-                    Just add your button For your website
+                    Just link from your website
                     <br/>
                     <br/>
-                    <a href="http://localhost:8080/#/Ideabile/monera/README.md">
+                    <a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
                         <img alt="" src="/static/edit.svg"/>
                     </a>
                     <h2>Markdown</h2>
-                    <pre>
-                        <code>[![Build Status](/static/edit.svg)](http://localhost:8080/#/Ideabile/monera/README.md)</code>
-                    </pre>
+                    <pre><code>[![Build Status](/static/edit.svg)](http://www.ideabile.com/ermes/#/Ideabile/monera/README.md)</code></pre>
+                    <br/>
                     <h2>HTML</h2>
-                    <pre>
-                        <code>
-                        &#x3C;a href=&#x22;http://localhost:8080/#/Ideabile/monera/README.md&#x22;&#x3E;
-                          &#x3C;img alt=&#x22;&#x22; src=&#x22;/static/edit.svg&#x22;/&#x3E;
-                        &#x3C;/a&#x3E;
-                        </code>
-                    </pre>
+                    <pre><code>&#x3C;a href=&#x22;http://www.ideabile.com/ermes/#/Ideabile/monera/README.md&#x22;&#x3E;
+    &#x3C;img alt=&#x22;&#x22; src=&#x22;/static/edit.svg&#x22;/&#x3E;
+&#x3C;/a&#x3E;</code></pre>
                 </p>
             </div>
-            <FileSearch v-bind:user="user" v-bind:repo="repo" v-bind:path="path" />
-            <button v-on:click="fetchSource()">Fetch</button>
+            <FileSearch
+                @update:user="val => user = val"
+                :user="user"
+                @update:repo="val => repo = val"
+                :repo="repo"
+                @update:path="val => path = val"
+                :path="path" />
+            <button v-on:click="fetchSource">Fetch</button>
         </div>
     </div>
 </template>
@@ -151,6 +158,23 @@
 
      methods: {
 
+         async fetchSource() {
+
+             const url = `//api.github.com/repos/${this.user}/${this.repo}/contents/${this.path}`;
+
+             try {
+
+                 const { data } = await axios.get(url) || {};
+                 this.content = atob(data.content);
+
+             } catch(e) {
+
+                 console.log(e);
+
+             }
+
+         },
+
          setSourceFromUrlHash() {
              const hash = window.location.hash.substr(1)
 
@@ -161,15 +185,12 @@
 
              const [ empty, user, repo, ...path] = hashHasAllRequirements ? hash.split('/') : [];
 
-            this.user = user || '';
-            this.repo = repo || '';
-            this.path = path.join('/') || '';
+             this.user = user || '';
+             this.repo = repo || '';
+             this.path = path.join('/') || '';
 
-             if (user && repo && path) {
-                 this.fetchSource();
-             } else {
-                 this.content = '';
-             }
+             this.fetchSource();
+
          },
 
          switchMode(mode) {
@@ -216,22 +237,6 @@
 
          },
 
-         async fetchSource() {
-
-             const url = `//api.github.com/repos/${this.user}/${this.repo}/contents/${this.path}`;
-
-             try {
-
-                 const { data } = await axios.get(url) || {};
-                 this.content = atob(data.content);
-
-             } catch(e) {
-
-                 console.log(e);
-
-             }
-
-         }
      }
  }
 </script>
@@ -255,7 +260,7 @@
  .editor {
      border: 1px solid #e4e4e4;
      display: flex;
-    flex-flow:column;
+     flex-flow:column;
  }
 
  .logo {

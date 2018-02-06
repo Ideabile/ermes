@@ -1,77 +1,91 @@
 <template>
-  <div v-bind:class="{ active }">
-    <button v-on:click="focus" >{{ value || placeholder }}</button>
-    <div class="suggest">
-      <input ref="input" v-on:blur="blur" v-model="value" />
-      <ul
-        <li v-for="suggestion in suggestions">{{ suggestion }}</li>
-      </ul>
+    <div v-bind:class="{ active }">
+        <a class="button" v-on:click="focus" >{{ value || placeholder }}</a>
+        <div class="suggest">
+            <input ref="input" v-on:blur="blur" v-model="value" />
+            <ul>
+                <li v-for="suggestion in suggestions" v-on:click="setValue(suggestion)">{{ suggestion }}</li>
+            </ul>
+        </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
-  .suggest {
-    display: none;
-  }
-  .active .suggest {
-    display: block;
-  }
+ .active {
+     position: relative;
+ }
+ .suggest {
+     display: none;
+     position: absolute;
+     top: 100%;
+     left: 0;
+ }
+ .active .suggest {
+     display: block;
+ }
 </style>
 
 <script>
  /* eslint-disable */
 
-  export default {
+ export default {
 
-    props: [
-      'originalValue',
-      'placeholder'
-    ],
+     props: [
+         'original',
+         'placeholder'
+     ],
 
-    data() {
+     data() {
 
-      return {
+         return {
 
-        value: this.originalValue || '',
-        suggestions: [],
-        active: false
+             value: this.original || '',
+             suggestions: [],
+             active: false
 
-      };
+         };
 
-    },
+     },
 
-    watch: {
+     watch: {
 
-      originalValue() {
+         originalValue() {
 
-          this.value = this.originalValue;
+             this.value = this.originalValue;
 
-      },
+         },
 
-      value() {
+         value() {
 
-        if (this.timeout) clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => this.$emit('update:value', this.value), 500);
+             if (this.timeout) clearTimeout(this.timeout);
+             this.timeout = setTimeout(() => this.$emit('update', this.value), 500);
 
-      }
+         }
 
-    },
+     },
 
-    methods: {
+     methods: {
 
-      blur() {
-        this.active = false;
-      },
+         setValue(value) {
 
-      focus() {
+             this.value = value;
 
-        this.active = true;
-        this.$refs.input.focus();
+         },
 
-      }
+         blur() {
+             setTimeout(() => {
+                this.active = false;
+             }, 500);
+         },
 
-    }
+         focus() {
 
-  }
+             this.active = true;
+             setTimeout(() => this.$refs.input.focus(), 300);
+
+         }
+
+     }
+
+ }
 </script>
