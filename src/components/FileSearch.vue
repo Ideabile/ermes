@@ -2,13 +2,13 @@
     <div>
         <ul class="button-group">
             <li>
-                <AutoSuggest v-bind:original="user" ref="users" v-on:update="(value) => fillSuggestions('users', value)" placeholder="Fill User" />
+                <AutoSuggest :original="user" ref="user" v-on:update="(value) => fillSuggestions('user', value)" placeholder="Fill User" />
             </li>
             <li>
-                <AutoSuggest v-bind:original="repo" ref="repo" v-on:update="(value) => fillSuggestions('repo', value)" placeholder="Set Repo" />
+                <AutoSuggest :original="repo" ref="repo" v-on:update="(value) => fillSuggestions('repo', value)" placeholder="Set Repo" />
             </li>
             <li>
-                <AutoSuggest v-bind:original="path" ref="path" v-on:update="(value) => fillSuggestions('path', value)" placeholder="Set Path" />
+                <AutoSuggest :original="path" ref="path" v-on:update="(value) => fillSuggestions('path', value)" placeholder="Set Path" />
             </li>
         </ul>
     </div>
@@ -38,7 +38,6 @@
 
          async fillSuggestions(type, value) {
 
-
              if (!value) return;
              this.$emit(`update:${type}`, value);
 
@@ -49,9 +48,11 @@
              switch(type){
                  case 'user':
                      endpoint = [
-                         'search/user',
+                         'search/users',
                          `?q=${value}`
                      ];
+                     this.$emit('update:repo', '');
+                     this.$emit('update:path', '');
                      break;
 
                  case 'repo':
@@ -60,6 +61,7 @@
                          '?q=',
                          `${value}+user:${this.user}`
                      ];
+                     this.$emit('update:path', '');
                      break;
 
                  case 'path':
@@ -84,7 +86,7 @@
                              case 'repo':
                              return { value: el.name, label: el.name };
                              case 'path':
-                             return { value: el.path, label: el.name};
+                             return { value: el.path, label: el.path};
                      }
 
                  }) : [];
