@@ -1,6 +1,6 @@
 # Ermes
 
-> Ermes is an editor <i>Hosted in Github</i> made for <i>Github</i>.
+> Ermes is an editor *Hosted in Github* made for *Github*.
 
 Empowers static-websites by enabling login-free contributions for thoose websites hosted in the popular version control service.
 

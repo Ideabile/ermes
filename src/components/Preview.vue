@@ -1,19 +1,21 @@
 <template>
     <div>
-        <wysiwyg v-model="htmlData"></wysiwyg>
+        <div v-html="htmlData"></div>
     </div>
 </template>
 
+<style scoped>
+ div {
+     margin: 30px 20px;
+ }
+</style>
+
 <script>
  /* eslint-disable */
- import Vue from 'vue';
- import Wysiwyg from "vue-wysiwyg";
  import markdown from 'markdown-it';
- require('vue-wysiwyg/dist/vueWysiwyg.css');
+ require('github-markdown-css/github-markdown.css');
 
  const md = markdown();
-
- Vue.use(Wysiwyg);
 
  export default {
 

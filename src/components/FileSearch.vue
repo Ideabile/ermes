@@ -15,8 +15,8 @@
 </template>
 
 <style scoped>
- div {
-     line-height: 30px;
+ .button-group {
+     display: inline-block;
  }
 </style>
 
@@ -44,13 +44,50 @@
 
              const filter = type === 'repo' && this.user ? `+user:${this.user}` : '';
 
-             const searchEndPoint = type === 'repo' ? 'repository' : type;
-             const url = `//api.github.com/search/${searchEndPoint}?q=${value}${filter}`;
+             // This a wired exception.
+             let endpoint;
+             switch(type){
+                 case 'user':
+                     endpoint = [
+                         'search/user',
+                         `?q=${value}`
+                     ];
+                     break;
+
+                 case 'repo':
+                     endpoint = [
+                         'search/repositories',
+                         '?q=',
+                         `${value}+user:${this.user}`
+                     ];
+                     break;
+
+                 case 'path':
+                     endpoint = [
+                         'search/code',
+                         `?q=+repo:${this.user}/${this.repo}+filename:${value}`
+                     ];
+                     break;
+
+             }
+
+             const url = `//api.github.com/${endpoint.join('')}`;
 
              try {
 
                  const { data } = await axios.get(url);
-                 this.$refs[type].suggestions = data.total_count && data.total_count > 0 ? data.items.map(el => el.login || el.name) : [];
+                 this.$refs[type].suggestions = data.total_count && data.total_count > 0 ? data.items.map(el => {
+
+                     switch(type) {
+                             case 'user':
+                             return { value: el.login, label: el.login };
+                             case 'repo':
+                             return { value: el.name, label: el.name };
+                             case 'path':
+                             return { value: el.path, label: el.name};
+                     }
+
+                 }) : [];
 
              } catch(e){
 
