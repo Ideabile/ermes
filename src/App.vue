@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div class="edit" :class="{ pr: submittingPR }" v-if="content !== ''">
+        <div class="edit" :class="{ pr: submittingPR }" v-if="fetched">
             <div class="edit__pr__modal">
                 <b>Describe your changes</b>
                 <textarea ref="commitMessage"></textarea>
@@ -57,7 +57,7 @@
                     :lang="language"/>
             </div>
         </div>
-        <div v-if="!content"  v-html="readme" class="intro markdown-body"></div>
+        <div v-if="!fetched"  v-html="readme" class="intro markdown-body"></div>
     </div>
 </template>
 
@@ -228,6 +228,7 @@
              localState: 'saved',
              submittingPR: false,
              hasChanged: false,
+             fetched: false,
              baseUrl: process.env.URL_BASE,
              readme: process.env.README.content
          }
@@ -304,15 +305,16 @@
                  const { data } = await axios.get(url) || {};
                  window.location.hash = `#/${this.user}/${this.repo}/${this.path}`;
                  this.content = b64DecodeUnicode(data.content);
- this.hasChanged = false;
+                 this.hasChanged = false;
+                 this.fetched = true;
 
- } catch(e) {
+             } catch(e) {
 
-     console.log(e);
+                 console.log(e);
 
- }
+             }
 
- },
+         },
 
          setSourceFromUrlHash() {
              if (!window.location.hash) return;
@@ -381,6 +383,6 @@
 
          },
 
- }
+     }
  }
 </script>
