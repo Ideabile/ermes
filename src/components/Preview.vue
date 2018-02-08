@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-html="htmlData"></div>
+        <div v-html="htmlData" class="markdown-body"></div>
     </div>
 </template>
 
@@ -15,7 +15,11 @@
  import markdown from 'markdown-it';
  require('github-markdown-css/github-markdown.css');
 
- const md = markdown();
+ const md = markdown({
+  html: true,
+  linkify: true,
+  typographer: true
+ });
 
  export default {
 
