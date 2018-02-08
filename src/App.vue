@@ -8,6 +8,11 @@
             </div>
             <div class="edit__bar">
                 <div class="edit__bar--left">
+                    <h1 class="logo">
+                        <b>Ermes</b>
+                        <img alt="Ermes" :src="`${baseUrl}static/logoX280.png`"/>
+                    </h1>
+
                     <ul class="nav">
 
                         <li
@@ -23,7 +28,6 @@
                 </div>
 
                 <div class="edit__bar--right">
-                    <img alt="Ermes" :src="`${baseUrl}static/logo.png`" class="logo" height="30px"/>
                     <FileSearch
                         @update:user="val => setFileSearch('user', val)"
                         :user="user"
@@ -31,7 +35,9 @@
                         :repo="repo"
                         @update:path="val => setFileSearch('path', val, true)"
                         :path="path" />
-                    <a class="button" v-on:click="createPullRequest">Send Changes</a>
+                    <div>
+                        <a class="button" v-on:click="createPullRequest">Send Changes</a>
+                    </div>
                 </div>
             </div>
 
@@ -51,25 +57,7 @@
                     :lang="language"/>
             </div>
         </div>
-        <div class="intro" v-if="!content">
-            <div class="logo">
-                <img alt="Ermes" :src="`${baseUrl}static/logo.png`"/>
-            </div>
-            <div class="branding">
-                <div class="try-out">
-                    <h3>Just</h3>
-                    <FileSearch
-                        @update:user="val => setFileSearch('user', val)"
-                        :user="user"
-                        @update:repo="val => setFileSearch('repo', val)"
-                        :repo="repo"
-                        @update:path="val => setFileSearch('path', val)"
-                        :path="path" />
-                    <a class="button" v-on:click="fetchSource">Try!</a>
-                </div>
-                <div v-html="readme"/>
-            </div>
-        </div>
+        <div v-if="!content"  v-html="readme" class="intro markdown-body"></div>
     </div>
 </template>
 
@@ -77,6 +65,17 @@
  #app {
      font-family: Helvetica, sans-serif;
      font-size: 0.8em;
+ }
+
+ .logo {
+     line-height: 18px;
+     font-size: 18px;
+     display: inline-block;
+ }
+
+ .logo img {
+     height: 18px;
+     vertical-align: middle;
  }
 
  .edit {
@@ -120,9 +119,8 @@
  }
 
  .edit__bar{
-     height: 30px;
      vertical-align: middle;
-     margin: 10px 5px 0 5px;
+     margin: 0 5px;
  }
 
  .edit__bar--left {
@@ -131,13 +129,18 @@
 
  .edit__bar--right {
      float: right;
-     vertical-align: middle;
+     margin: 5px 0 0 0;
  }
 
  .edit__bar--right > *{
-     display: inline-block;
-     float: left;
+     display: inline-flex;
      margin: 4px;
+     line-height: 43px;
+     float: left;
+ }
+
+ .edit__body {
+     clear: both;
  }
 
  .branding {
@@ -162,11 +165,8 @@
      padding: 0 20px;
  }
 
- img.logo, .user {
-     float: right;
- }
-
  ul.nav {
+     display: inline-block;
      list-style: none;
      margin: 0;
      padding: 0;
@@ -178,17 +178,8 @@
      flex-flow:column;
  }
 
- .intro .logo {
-     text-align: center;
-     width: 100%;
- }
-
- .intro .logo img {
-     height: 200px;
- }
-
- .branding .button {
-     margin: 0 10px;
+ .intro {
+     margin: 60px 100px;
  }
 
  ul.nav li {
@@ -197,6 +188,7 @@
      border: 1px solid #e4e4e4;
      border-bottom: 0;
      background: #f6f6f6;
+     cursor: pointer;
  }
 </style>
 <script>
@@ -206,11 +198,14 @@
  import User from '@/components/User'
  import FileSearch from '@/components/FileSearch'
  import Preview from '@/components/Preview'
- import Turndown from 'turndown'
+
+ function b64DecodeUnicode(str) {
+     return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+     }).join(''))
+ }
 
  require('github-markdown-css/github-markdown.css');
-
- const turndownService = new Turndown();
 
  export default {
 
@@ -308,16 +303,16 @@
 
                  const { data } = await axios.get(url) || {};
                  window.location.hash = `#/${this.user}/${this.repo}/${this.path}`;
-                 this.content = atob(data.content);
-                 this.hasChanged = false;
+                 this.content = b64DecodeUnicode(data.content);
+ this.hasChanged = false;
 
-             } catch(e) {
+ } catch(e) {
 
-                 console.log(e);
+     console.log(e);
 
-             }
+ }
 
-         },
+ },
 
          setSourceFromUrlHash() {
              if (!window.location.hash) return;
@@ -386,6 +381,6 @@
 
          },
 
-     }
+ }
  }
 </script>

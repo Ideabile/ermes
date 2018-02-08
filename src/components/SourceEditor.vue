@@ -4,7 +4,7 @@
             v-model="value"
             @init="editorInit"
             :lang="lang"
-            theme="chrome"
+            :theme="theme"
             :width="innerWidth"
             :height="innerHeight" />
     </div>
@@ -19,6 +19,7 @@
  require('brace/mode/less');
  require('brace/mode/php');
  require('brace/mode/markdown');
+ require('brace/theme/ambiance');
  require('brace/theme/chrome');
 
  export default {
@@ -54,6 +55,7 @@
          const { innerWidth, innerHeight } = window || {};
 
          return {
+             theme: 'ambiance',
              innerWidth,
              innerHeight: innerHeight - 70
          };
