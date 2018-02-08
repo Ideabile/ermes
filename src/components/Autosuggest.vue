@@ -50,6 +50,8 @@
      padding: 10px;
      border-top: 1px solid #d4d4d4;
      border-bottom: 1px solid #d4d4d4;
+     width: 100%;
+     text-align: left;
  }
 
  li:last-child {
@@ -86,9 +88,9 @@
 
      watch: {
 
-         originalValue() {
+         original() {
 
-             this.value = this.originalValue;
+             this.value = this.original;
 
          },
 

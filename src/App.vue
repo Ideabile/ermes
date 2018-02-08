@@ -25,12 +25,11 @@
                 <div class="edit__bar--right">
                     <img alt="Ermes" :src="`${baseUrl}static/logo.png`" class="logo" height="30px"/>
                     <FileSearch
-                        class="edit__file-search"
-                        @update:user="val => user = val"
+                        @update:user="val => setFileSearch('user', val)"
                         :user="user"
-                        @update:repo="val => repo = val"
+                        @update:repo="val => setFileSearch('repo', val)"
                         :repo="repo"
-                        @update:path="val => path = val"
+                        @update:path="val => setFileSearch('path', val, true)"
                         :path="path" />
                     <a class="button" v-on:click="createPullRequest">Send Changes</a>
                 </div>
@@ -60,11 +59,11 @@
                 <div class="try-out">
                     <h3>Just</h3>
                     <FileSearch
-                        @update:user="val => user = val"
+                        @update:user="val => setFileSearch('user', val)"
                         :user="user"
-                        @update:repo="val => repo = val"
+                        @update:repo="val => setFileSearch('repo', val)"
                         :repo="repo"
-                        @update:path="val => path = val"
+                        @update:path="val => setFileSearch('path', val)"
                         :path="path" />
                     <a class="button" v-on:click="fetchSource">Try!</a>
                 </div>
@@ -291,7 +290,17 @@
 
      methods: {
 
+         setFileSearch(type, value, autofetch = false) {
+
+             this[type] = value;
+
+             if (type === 'path' && autofetch) this.fetchSource();
+
+         },
+
          async fetchSource() {
+
+             if (!this.user && !this.repo && !this.path) return;
 
              const url = `//api.github.com/repos/${this.user}/${this.repo}/contents/${this.path}`;
 
@@ -340,7 +349,6 @@
 
          createPullRequest() {
 
-             console.log(this.hasChanged);
              if (!this.hasChanged) return;
              this.submittingPR = true;
 
