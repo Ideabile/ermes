@@ -1,10 +1,16 @@
 # Ermes
 
-> Ermes is an editor *Hosted in Github* made for *Github*.
+> Ermes is an editor *Hosted in Github* made for *everyone*.
 
-Empowers static-websites by enabling login-free contributions for thoose websites hosted in the popular version control service.
+Empowers static-websites by enabling login-free contributions for thoose contents hosted in the popular version control service.
 
-Just with the power of a simpler link!
+Convert any visitor, or reader; to be a possible contributor to your content, 
+by automating all the learning and requirements for a Pull Request.
+
+Your are just one link away.
+
+> A contribution, even if would just be fixing a coma, is still a contribution.<br/>
+> Thats the power of **Wikipedia**.
 
 <p align="center">
     <img src="http://www.ideabile.com/ermes/static/logoX280.png" alt="Ermes Logo, the messenger of Gods" />

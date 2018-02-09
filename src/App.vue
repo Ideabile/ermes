@@ -7,11 +7,25 @@
                 <a class="button" v-on:click="save">Create Pull Request</a>
             </div>
             <div class="edit__bar">
+                <h1 class="logo">
+                    <b>Ermes</b>
+                    <span>a github editor, for everyone.</span>
+                </h1>
+
+                <div class="edit__bar--right">
+                    <FileSearch
+                        @update:user="val => setFileSearch('user', val)"
+                        :user="user"
+                        @update:repo="val => setFileSearch('repo', val)"
+                        :repo="repo"
+                        @update:path="val => setFileSearch('path', val, true)"
+                        :path="path" />
+                    <div>
+                        <a class="button" v-on:click="createPullRequest">Send Changes</a>
+                    </div>
+                </div>
+
                 <div class="edit__bar--left">
-                    <h1 class="logo">
-                        <b>Ermes</b>
-                        <img alt="Ermes" :src="`${baseUrl}static/logoX280.png`"/>
-                    </h1>
 
                     <ul class="nav">
 
@@ -27,18 +41,6 @@
                     </ul>
                 </div>
 
-                <div class="edit__bar--right">
-                    <FileSearch
-                        @update:user="val => setFileSearch('user', val)"
-                        :user="user"
-                        @update:repo="val => setFileSearch('repo', val)"
-                        :repo="repo"
-                        @update:path="val => setFileSearch('path', val, true)"
-                        :path="path" />
-                    <div>
-                        <a class="button" v-on:click="createPullRequest">Send Changes</a>
-                    </div>
-                </div>
             </div>
 
             <div class="edit__body">
@@ -68,9 +70,13 @@
  }
 
  .logo {
-     line-height: 18px;
-     font-size: 18px;
-     display: inline-block;
+     line-height: 13px;
+     font-size: 13px;
+     padding: 0 10px;
+ }
+
+ .logo span {
+     color: #666;
  }
 
  .logo img {
@@ -120,7 +126,8 @@
 
  .edit__bar{
      vertical-align: middle;
-     margin: 0 5px;
+     margin: 0 5px 0 5px;
+     overflow: hidden;
  }
 
  .edit__bar--left {
