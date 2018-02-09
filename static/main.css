@@ -15,6 +15,14 @@ body {
     word-wrap: break-word;
 }
 
+a {
+    color: #333;
+}
+
+a:visited {
+    color: #555;
+}
+
 .loader {
     display: none;
     width: 100%;
