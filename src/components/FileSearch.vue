@@ -73,7 +73,7 @@
 
              }
 
-             const url = `//api.github.com/${endpoint.join('')}`;
+             const url = `https://api.github.com/${endpoint.join('')}`;
 
              try {
 

@@ -298,7 +298,7 @@
 
              if (!this.user && !this.repo && !this.path) return;
 
-             const url = `//api.github.com/repos/${this.user}/${this.repo}/contents/${this.path}`;
+             const url = `https://api.github.com/repos/${this.user}/${this.repo}/contents/${this.path}`;
              window.document.body.classList.add('loading');
 
              try {
