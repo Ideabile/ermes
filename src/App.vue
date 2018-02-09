@@ -10,6 +10,12 @@
                 <h1 class="logo">
                     <b>Ermes</b>
                     <span>a github editor, for everyone.</span>
+                    <div class="credits">
+                        Open Sourced 
+                        <a href="https://github.com/Ideabile/ermes">
+                            <img alt="GitHub logo" src="static/github.svg"/>
+                        </a> with ♥ and javascript by <a href="http://www.ideabile.com">Ideabile</a>
+                    </div>
                 </h1>
 
                 <div class="edit__bar--right">
@@ -59,14 +65,29 @@
                     :lang="language"/>
             </div>
         </div>
-        <div v-if="!fetched"  v-html="readme" class="intro markdown-body"></div>
+        <div v-if="!fetched">
+            <div v-html="readme" class="intro markdown-body"></div>
+            <div class="credits">
+                Open Sourced
+                <a href="https://github.com/Ideabile/ermes">
+                    <img alt="GitHub logo" src="http://www.ideabile.com/ermes/static/github.svg"/>
+                </a> with ♥ and javascript by <a href="http://www.ideabile.com">Ideabile</a>
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped>
- #app {
-     font-family: Helvetica, sans-serif;
-     font-size: 0.8em;
+ .credits {
+     height: 20px;
+     line-height: 20px;
+     text-align: center;
+     margin: 10px;
+     vertical-align: middle;
+ }
+
+ .credits img {
+     height: 16px;
  }
 
  .logo {
@@ -80,9 +101,17 @@
  }
 
  .logo img {
-     height: 18px;
+     height: 13px;
      vertical-align: middle;
  }
+
+ .logo .credits {
+     margin: 0 5px;
+     font-size: 8px;
+     line-height: 13px;
+     float: right;
+ }
+
 
  .edit {
 
