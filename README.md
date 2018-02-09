@@ -1,10 +1,22 @@
 # Ermes
 
-> Ermes is an editor <i>Hosted in Github</i> made for <i>Github</i>.
+> Ermes is an editor *Hosted in Github* made for *Github*.
 
 Empowers static-websites by enabling login-free contributions for thoose websites hosted in the popular version control service.
 
-Just link from your website with a simple button [![Edit](http://www.ideabile.com/ermes/static/edit.svg)](http://www.ideabile.com/ermes/#!/Ideabile/ermes/README.md)
+Just with the power of a simpler link!
+
+<p align="center">
+    <img src="http://www.ideabile.com/ermes/static/logoX280.png" alt="Ermes Logo, the messenger of Gods" />
+</p>
+
+test
+
+<p align="center">
+    <a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
+        <img src="http://www.ideabile.com/ermes/static/contribute.svg" alt="Contribute to this content" />
+    </a>
+</p>
 
 ## How to use it
 You can just include a link in your website and point to the right repository informations.
@@ -12,34 +24,25 @@ You can just include a link in your website and point to the right repository in
 ### Markdown
 ``` markdown
 [![Edit this page](http://www.ideabile.com/ermes/static/edit.svg)](http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md)
+[![Submit a suggestion](http://www.ideabile.com/ermes/static/suggestion.svg)](http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md)
+[![Contribute to this content](http://www.ideabile.com/ermes/static/contribute.svg)](http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md)
 ```
+#### Preview
+
+[![Edit this page](http://www.ideabile.com/ermes/static/edit.svg)](http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md)
+[![Submit a suggestion](http://www.ideabile.com/ermes/static/suggestion.svg)](http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md)
+[![Contribute to this content](http://www.ideabile.com/ermes/static/contribute.svg)](http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md)
 
 ### Html
 ```html
 <a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
-    <img alt="" :src="`${baseUrl}static/edit.svg`"/>
+    <img alt="Edit this page" src="http://www.ideabile.com/ermes/static/edit.svg"/>
 </a>
-```
+<a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
+    <img alt="Submit a suggestion" src="http://www.ideabile.com/ermes/static/edit.svg"/>
+</a>
 
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+<a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
+    <img alt="Contribute to this content" src="http://www.ideabile.com/ermes/static/contribute.svg" />
+</a>
 ```
