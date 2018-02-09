@@ -299,6 +299,7 @@
              if (!this.user && !this.repo && !this.path) return;
 
              const url = `//api.github.com/repos/${this.user}/${this.repo}/contents/${this.path}`;
+             window.document.body.classList.add('loading');
 
              try {
 
@@ -307,6 +308,7 @@
                  this.content = b64DecodeUnicode(data.content);
                  this.hasChanged = false;
                  this.fetched = true;
+                 window.document.body.classList.remove('loading');
 
              } catch(e) {
 
@@ -317,7 +319,9 @@
          },
 
          setSourceFromUrlHash() {
-             if (!window.location.hash) return;
+             if (!window.location.hash) {
+                 return window.document.body.classList.remove('loading');
+             };
              const hash = window.location.hash.substr(1)
 
              const hashHasAllRequirements = (
