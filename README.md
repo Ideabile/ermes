@@ -9,7 +9,7 @@ by automating all the learning and requirements for a Pull Request.
 
 Your are just one link away.
 
-> A contribution, even a small one, is still a contribution.<br/>
+> A contribution, even a big one, is still a contribution.<br/>
 > Thats the power of **Wikipedia**.
 
 <p align="center">
