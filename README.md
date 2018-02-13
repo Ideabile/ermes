@@ -1,6 +1,6 @@
 # Ermes
 
-> Ermes is an editor *Hosted in Github* made for *everyone*.
+> Ermes is an editor *Hosted in Github* made for **everyone**.
 
 Empowers static-websites by enabling login-free contributions for thoose contents hosted in the popular version control service.
 
@@ -9,7 +9,7 @@ by automating all the learning and requirements for a Pull Request.
 
 Your are just one link away.
 
-> A contribution, even if would just be fixing a coma, is still a contribution.<br/>
+> A contribution, even a small one, is still a contribution.<br/>
 > Thats the power of **Wikipedia**.
 
 <p align="center">
