@@ -42,6 +42,7 @@ You can just include a link in your website and point to the right repository in
 <a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
     <img alt="Edit this page" src="http://www.ideabile.com/ermes/static/edit.svg"/>
 </a>
+
 <a href="http://www.ideabile.com/ermes/#/Ideabile/ermes/README.md">
     <img alt="Submit a suggestion" src="http://www.ideabile.com/ermes/static/edit.svg"/>
 </a>
