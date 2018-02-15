@@ -10,15 +10,16 @@
                 <h1 class="logo">
                     <b>Ermes</b>
                     <span>a github editor, for everyone.</span>
-                    <div class="credits">
-                        Open Sourced 
-                        <a href="https://github.com/Ideabile/ermes">
-                            <img alt="GitHub logo" src="static/github.svg"/>
-                        </a> with ♥ and javascript by <a href="http://www.ideabile.com">Ideabile</a>
-                    </div>
+                    <Credits />
                 </h1>
 
                 <div class="edit__bar--right">
+                    <div>
+                        <a class="button" v-on:click="createPullRequest">Send Changes</a>
+                    </div>
+                </div>
+
+                <div class="edit__bar--left">
                     <FileSearch
                         @update:user="val => setFileSearch('user', val)"
                         :user="user"
@@ -27,38 +28,19 @@
                         @update:path="val => setFileSearch('path', val, true)"
                         :path="path" />
                     <div>
-                        <a class="button" v-on:click="createPullRequest">Send Changes</a>
+                        <a class="button" :class="{ hide: !fileChanged }" v-on:click="fetchSource">Change file</a>
                     </div>
                 </div>
-
-                <div class="edit__bar--left">
-
-                    <ul class="nav">
-
-                        <li
-                            class="nav-item"
-                            v-on:click="switchMode('source')">Source</li>
-
-                        <li
-                            v-if="isHtml"
-                            class="nav-item"
-                            v-on:click="switchMode('wysiwyg')">Preview</li>
-
-                    </ul>
-                </div>
-
             </div>
 
             <div class="edit__body">
                 <SourceEditor
-                    v-if="mode === 'source'"
                     class="edit__body__source"
+                    ref="editor"
                     @update:source="setSource"
                     :content="content"
                     :lang="language"/>
-
                 <Preview
-                    v-if="mode === 'wysiwyg'"
                     class="edit__body__preview"
                     ref="wysiwyg"
                     :content="content"
@@ -67,29 +49,15 @@
         </div>
         <div v-if="!fetched">
             <div v-html="readme" class="intro markdown-body"></div>
-            <div class="credits">
-                Open Sourced
-                <a href="https://github.com/Ideabile/ermes">
-                    <img alt="GitHub logo" src="http://www.ideabile.com/ermes/static/github.svg"/>
-                </a> with ♥ and javascript by <a href="http://www.ideabile.com">Ideabile</a>
-            </div>
+            <Credits />
         </div>
     </div>
 </template>
 
 <style scoped>
- .credits {
-     height: 20px;
-     line-height: 20px;
-     text-align: center;
-     margin: 10px;
-     vertical-align: middle;
+ .hide {
+     display: none;
  }
-
- .credits img {
-     height: 16px;
- }
-
  .logo {
      line-height: 13px;
      font-size: 13px;
@@ -98,23 +66,6 @@
 
  .logo span {
      color: #666;
- }
-
- .logo img {
-     height: 13px;
-     vertical-align: middle;
- }
-
- .logo .credits {
-     margin: 0 5px;
-     font-size: 8px;
-     line-height: 13px;
-     float: right;
- }
-
-
- .edit {
-
  }
 
  .edit.pr:after {
@@ -156,7 +107,6 @@
  .edit__bar{
      vertical-align: middle;
      margin: 0 5px 0 5px;
-     overflow: hidden;
  }
 
  .edit__bar--left {
@@ -177,6 +127,19 @@
 
  .edit__body {
      clear: both;
+ }
+
+ .edit__body__source {
+     width: 50%;
+     min-height: 100%;
+     float: left;
+ }
+
+ .edit__body__preview {
+     width: calc(50% - 40px);
+     max-height: calc(87vh);
+     overflow-y: scroll;
+     float: right;
  }
 
  .branding {
@@ -234,6 +197,7 @@
  import User from '@/components/User'
  import FileSearch from '@/components/FileSearch'
  import Preview from '@/components/Preview'
+ import Credits from '@/components/Credits'
 
  function b64DecodeUnicode(str) {
      return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
@@ -251,7 +215,8 @@
          SourceEditor,
          Preview,
          User,
-         FileSearch
+         FileSearch,
+         Credits
      },
 
      data() {
@@ -265,6 +230,7 @@
              submittingPR: false,
              hasChanged: false,
              fetched: false,
+             fileChanged: false,
              baseUrl: process.env.URL_BASE,
              readme: process.env.README.content
          }
@@ -323,11 +289,16 @@
      methods: {
 
          setFileSearch(type, value, autofetch = false) {
-
              this[type] = value;
 
-             if (type === 'path' && autofetch) this.fetchSource();
+             if (type === 'path' && value !== '' && autofetch) {
+                 this.fileChanged = true;
+             }
+         },
 
+         defferedFetchSource(seconds = 1000) {
+             if (this._timeout) clearTimeout(this._timeout);
+             this._timeout = setTimeout(() => this.fetchSource(), seconds);
          },
 
          async fetchSource() {
@@ -344,20 +315,36 @@
                  this.content = b64DecodeUnicode(data.content);
                  this.hasChanged = false;
                  this.fetched = true;
+                 this.fileChanged = false;
+
+                 setTimeout(() => this.bindScrolling());
+
                  window.document.body.classList.remove('loading');
 
              } catch(e) {
+
 
                  console.log(e);
 
              }
 
+
+         },
+
+         bindScrolling() {
+             //const editorBox = this.$refs.editor.$el.querySelector('.ace_scrollbar-inner').getBoundingClientRect();
+             //const wysiwygBox = this.$refs.wysiwyg.$el.querySelector('.markdown-body').getBoundingClientRect();
+             //this.$refs.editor.editor.session.on("changeScrollTop", (value) => {
+             //});
+             //this.$refs.wysiwyg.$el.addEventListener('scroll', () => console.log('preview scroll'));
          },
 
          setSourceFromUrlHash() {
              if (!window.location.hash) {
-                 return window.document.body.classList.remove('loading');
-             };
+                 window.document.body.classList.remove('loading');
+                 return;
+             }
+
              const hash = window.location.hash.substr(1)
 
              const hashHasAllRequirements = (

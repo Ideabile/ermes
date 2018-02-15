@@ -6,7 +6,6 @@
 
 <style scoped>
  div {
-     margin: 30px 20px;
  }
 </style>
 
@@ -26,6 +25,13 @@
      props: {
          lang: { default: 'markdown' },
          content: { default: '' }
+     },
+
+     watch: {
+         content() {
+             if (!this.lang === 'markdown') return;
+             this.htmlData = md.render(this.content);
+         }
      },
 
      data () {

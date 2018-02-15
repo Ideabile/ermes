@@ -39,6 +39,7 @@
              this.innerHeight = height;
 
              editor.resize();
+             this.editor = editor;
 
          }
 
