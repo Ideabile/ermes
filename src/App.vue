@@ -231,9 +231,6 @@
     padding: 0;
   }
 
-  @media(min-width: 40em) {
-  }
-
   .editor {
     border: 1px solid #e4e4e4;
     display: flex;
@@ -241,7 +238,11 @@
   }
 
   .intro {
-    margin: 60px 100px;
+    margin: 4em 2em;
+    @media(min-width: 40em) {
+      margin: 4em auto;
+      max-width: 40em;
+    }
   }
 
   ul.nav li {
