@@ -88,6 +88,12 @@
     font-size: 13px;
     margin: 10px;
     min-width: calc(100% - 20px);
+    .credits {
+      display: none;
+      @media(min-width: 40em) {
+        display: inline;
+      }
+    }
   }
 
   .logo span {
@@ -161,8 +167,10 @@
     display: flex;
     justify-content: space-between;
     margin: 4px;
+    margin-bottom: 10px;
 
     @media(min-width: 40em) {
+      margin-bottom: 4px;
       min-width: auto;
       margin-right: auto;
     }
