@@ -15,6 +15,9 @@
 </template>
 
 <style scoped>
+  div {
+    display: flex;
+  }
  .button-group {
      display: inline-block;
  }
