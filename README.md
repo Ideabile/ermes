@@ -1,4 +1,4 @@
-# Ermes
+# Ermes with emoji ⛱
 
 > Ermes is an editor *Hosted in Github* made for **everyone**.
 
