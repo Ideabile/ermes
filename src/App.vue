@@ -88,6 +88,12 @@
     font-size: 13px;
     margin: 10px;
     min-width: calc(100% - 20px);
+    .credits {
+      display: none;
+      @media(min-width: 40em) {
+        display: inline;
+      }
+    }
   }
 
   .logo span {
@@ -161,8 +167,10 @@
     display: flex;
     justify-content: space-between;
     margin: 4px;
+    margin-bottom: 10px;
 
     @media(min-width: 40em) {
+      margin-bottom: 4px;
       min-width: auto;
       margin-right: auto;
     }
@@ -223,9 +231,6 @@
     padding: 0;
   }
 
-  @media(min-width: 40em) {
-  }
-
   .editor {
     border: 1px solid #e4e4e4;
     display: flex;
@@ -233,7 +238,11 @@
   }
 
   .intro {
-    margin: 60px 100px;
+    margin: 4em 2em;
+    @media(min-width: 40em) {
+      margin: 4em auto;
+      max-width: 40em;
+    }
   }
 
   ul.nav li {

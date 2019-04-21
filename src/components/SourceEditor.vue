@@ -1,86 +1,97 @@
 <template>
-    <div>
-        <editor
-            v-model="value"
-            @init="editorInit"
-            :lang="lang"
-            :theme="theme"
-            :width="innerWidth"
-            :height="innerHeight" />
-    </div>
+  <div>
+    <editor
+      v-model="value"
+      @init="editorInit"
+      :lang="lang"
+      :theme="theme"
+      :width="innerWidth"
+      :height="innerHeight" />
+  </div>
 </template>
 
 <script>
- /* eslint-disable */
- import Editor from 'vue2-ace-editor';
+  /* eslint-disable */
+  import Editor from 'vue2-ace-editor';
 
- require('brace/mode/html');
- require('brace/mode/javascript');
- require('brace/mode/less');
- require('brace/mode/php');
- require('brace/mode/markdown');
- require('brace/theme/ambiance');
- require('brace/theme/chrome');
+  require('brace/mode/html');
+  require('brace/mode/javascript');
+  require('brace/mode/less');
+  require('brace/mode/php');
+  require('brace/mode/markdown');
+  require('brace/theme/ambiance');
+  require('brace/theme/chrome');
 
- export default {
+  export default {
 
-     components: {
-         Editor
-     },
+    components: {
+      Editor
+    },
+
+    mounted() {
+      window.addEventListener('resize', () => this.resize());
+      window.addEventListener('onrotationchange', () => this.resize());
+    },
 
 
-     methods: {
+    methods: {
 
-         editorInit(editor) {
+      editorInit(editor) {
+        this.editor = editor;
+        this.resize();
+      },
 
-             const { width, height } = this.$el.getBoundingClientRect();
+      resize() {
 
-             this.innerWidth = width;
-             this.innerHeight = height;
+        const { width, height } = this.$el.getBoundingClientRect();
 
-             editor.resize();
+        this.innerWidth = width;
+        this.innerHeight = height;
 
-         }
+        this.editor.resize();
 
-     },
+      }
 
-     props: {
-         lang: '',
-         language: 'text',
-         content: ''
-     },
+    },
 
-     data () {
+    props: {
+      lang: '',
+      language: 'text',
+      content: ''
+    },
 
-         const { innerWidth, innerHeight } = window || {};
+    data () {
 
-         return {
-             theme: 'ambiance',
-             innerWidth,
-             innerHeight: innerHeight - 70
-         };
+      const { innerWidth, innerHeight } = window || {};
 
-     },
+      return {
+        editor: null,
+        theme: 'ambiance',
+        innerWidth,
+        innerHeight: innerHeight - 70
+      };
 
-     computed: {
+    },
 
-         value: {
+    computed: {
 
-             get: function() {
+      value: {
 
-                 return this.content;
+        get: function() {
 
-             },
+          return this.content;
 
-             set: function(value) {
+        },
 
-                 this.$emit('update:source', value);
+        set: function(value) {
 
-             }
+          this.$emit('update:source', value);
 
-         }
+        }
 
-     }
+      }
 
- }
+    }
+
+  }
 </script>
